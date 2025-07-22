@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureWeb - Platform Keamanan Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Auto-redirect script for logged-in users -->
+    <script>
+        // Check if user is already logged in and redirect to dashboard
+        (function() {
+            const authToken = localStorage.getItem('authToken') || localStorage.getItem('userToken');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (authToken && user.email) {
+                // User is already logged in, redirect to dashboard
+                window.location.replace('dashboard.html');
+                return;
+            }
+        })();
+    </script>
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-hero {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            z-index: 10;
+            position: relative;
+        }
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            font-weight: 600;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        .btn-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .features-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .quick-access {
+            padding: 60px 0;
+            text-align: center;
+        }
+        .quick-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .quick-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+        .quick-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Login Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(102, 126, 234, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+        
+        .popup-overlay.active {
+            display: flex !important;
+        }
+        
+        .login-popup {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            animation: popupSlide 0.4s ease-out;
+            max-height: 85vh;
+            overflow-y: auto;
+            margin: 20px;
+        }
+        
+        @keyframes popupSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .popup-close:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .login-header p {
+            color: #666;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        
+        .demo-credentials {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-credentials h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+            font-size: 0.9rem;
+        }
+        
+        .demo-account {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+        
+        .use-demo-btn {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon input {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .input-with-icon input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            font-size: 1.1rem;
+            z-index: 10;
+        }
+        
+        .popup-close:hover {
+            background: #dc3545;
+            color: white;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1><i class="fas fa-shield-alt"></i> Security Dashboard Platform</h1>
+                <p>Platform komprehensif untuk analisis keamanan website Anda</p>
+                <div class="cta-buttons">
+                    <button type="button" class="btn-hero btn-primary btn-login" onclick="openLoginPopup()">
+                        <i class="fas fa-sign-in-alt"></i> Login ke Dashboard
+                    </button>
+                    <a href="register.html" class="btn-hero btn-secondary">
+                        <i class="fas fa-user-plus"></i> Daftar Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 50px; color: #2c3e50; font-size: 2.5rem;">Fitur Utama</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>SSL Checker</h3>
+                    <p>Analisis mendalam sertifikat SSL website untuk memastikan keamanan koneksi</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security Headers</h3>
+                    <p>Evaluasi header keamanan dan dapatkan rekomendasi untuk meningkatkan proteksi</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>File Manager</h3>
+                    <p>Upload, kelola, dan simpan file dengan sistem tracking yang aman</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Activity Scheduler</h3>
+                    <p>Jadwalkan pemeriksaan keamanan otomatis dan task maintenance</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Security Guide</h3>
+                    <p>Panduan lengkap dan best practices untuk keamanan website</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 SecureWeb. Platform keamanan website terpercaya.</p>
+            <p>Dibuat dengan <i class="fas fa-heart" style="color: #e74c3c;"></i> untuk keamanan digital Indonesia</p>
+        </div>
+    </footer>
+
+    <!-- Login Popup -->
+    <div id="loginPopup" class="popup-overlay">
+        <div class="login-popup">
+            <button class="popup-close" onclick="closeLoginPopup()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="login-header">
+                <h1><i class="fas fa-shield-alt"></i> SecureWeb</h1>
+                <p>Masuk ke platform keamanan website</p>
+            </div>
+
+            <!-- Demo Credentials -->
+            <div class="demo-credentials">
+                <h4><i class="fas fa-info-circle"></i> Akun Demo untuk Testing:</h4>
+                <div class="demo-account">
+                    <span><strong>User Demo:</strong> user@example.com</span>
+                    <button class="use-demo-btn" onclick="fillDemoCredentials('user')">Gunakan</button>
+                </div>
+                <div class="demo-account">
+                    <span><strong>Test User:</strong> test@example.com</span>
+                    <button class="use-demo-btn" onclick="fillDemoCredentials('test')">Gunakan</button>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-with-icon">
+                        <input type="email" id="email" name="email" placeholder="Masukkan email Anda" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Masuk ke Dashboard
+                </button>
+                
+                <!-- Status Message -->
+                <div id="loginStatus" style="text-align: center; margin-top: 10px; font-size: 14px;"></div>
+            </form>
+
+            <div class="register-link">
+                <p>Belum punya akun? <a href="register.html">Daftar sekarang</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Unified JavaScript for popup login functionality
+        
+        // Main popup functions
+        function openLoginPopup() {
+            console.log('🔓 Opening login popup...');
+            
+            try {
+                // Always show popup for testing, comment out the token check
+                // const token = localStorage.getItem('authToken') || localStorage.getItem('userToken');
+                // if (token) {
+                //     console.log('✅ User already logged in, redirecting to dashboard');
+                //     window.location.href = 'dashboard.html';
+                //     return;
+                // }
+                
+                const popup = document.getElementById('loginPopup');
+                console.log('Popup element found:', popup);
+                
+                if (popup) {
+                    popup.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    console.log('✅ Login popup opened successfully');
+                    
+                    // Clear any previous form data
+                    const emailInput = document.getElementById('email');
+                    const passwordInput = document.getElementById('password');
+                    const statusDiv = document.getElementById('loginStatus');
+                    
+                    if (emailInput) emailInput.value = '';
+                    if (passwordInput) passwordInput.value = '';
+                    if (statusDiv) statusDiv.innerHTML = '';
+                } else {
+                    console.error('❌ Login popup element not found');
+                    alert('Error: Login popup not found!');
+                }
+            } catch (error) {
+                console.error('Error opening popup:', error);
+                alert('Error opening popup: ' + error.message);
+            }
+        }
+
+        function closeLoginPopup() {
+            console.log('🔒 Closing login popup...');
+            const popup = document.getElementById('loginPopup');
+            if (popup) {
+                popup.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                console.log('✅ Login popup closed successfully');
+            }
+        }
+
+        function fillDemoCredentials(type) {
+            console.log('📝 Filling demo credentials for:', type);
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            
+            if (emailInput && passwordInput) {
+                if (type === 'user') {
+                    emailInput.value = 'user@example.com';
+                    passwordInput.value = 'password123';
+                } else if (type === 'test') {
+                    emailInput.value = 'test@example.com';
+                    passwordInput.value = 'testpass123';
+                }
+                console.log('✅ Demo credentials filled successfully');
+            } else {
+                console.error('❌ Email or password input not found');
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            console.log('🔄 Handling login...');
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.querySelector('.login-btn');
+            const statusDiv = document.getElementById('loginStatus');
+            
+            if (!email || !password) {
+                statusDiv.innerHTML = '⚠️ Mohon masukkan email dan password';
+                statusDiv.style.color = '#dc3545';
+                return;
+            }
+            
+            // Disable button during login
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            statusDiv.innerHTML = '🔄 Memproses login...';
+            statusDiv.style.color = '#667eea';
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Save token and user data
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    // Show success message
+                    statusDiv.innerHTML = '✅ Login berhasil! Mengarahkan ke dashboard...';
+                    statusDiv.style.color = '#28a745';
+                    
+                    // Close popup and redirect after short delay
+                    setTimeout(() => {
+                        closeLoginPopup();
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                    
+                } else {
+                    throw new Error(data.message || 'Login gagal');
+                }
+                
+            } catch (error) {
+                console.error('❌ Login error:', error);
+                statusDiv.innerHTML = '❌ Error: ' + error.message;
+                statusDiv.style.color = '#dc3545';
+                
+                // Re-enable button on error
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Masuk ke Dashboard';
+            }
+        }
+
+        // Setup when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Page loaded, setting up popup functionality...');
+            
+            // Check for URL parameters to auto-open login popup
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('showLogin') === 'true') {
+                console.log('🔓 Auto-opening login popup from URL parameter');
+                // Clear the URL parameter for cleaner address bar
+                window.history.replaceState({}, document.title, window.location.pathname);
+                // Open login popup
+                openLoginPopup();
+            }
+            
+            // Check if user is already logged in
+            const token = localStorage.getItem('authToken') || localStorage.getItem('userToken');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (token && user.email) {
+                // User is already logged in, update button
+                const loginBtn = document.querySelector('.btn-login');
+                if (loginBtn) {
+                    loginBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Go to Dashboard';
+                    loginBtn.onclick = function() {
+                        window.location.href = 'dashboard.html';
+                    };
+                }
+            }
+            
+            // Close popup when clicking outside
+            document.addEventListener('click', function(e) {
+                const popup = document.getElementById('loginPopup');
+                if (e.target === popup) {
+                    closeLoginPopup();
+                }
+            });
+
+            // Close popup with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeLoginPopup();
+                }
+            });
+            
+            console.log('✅ All event listeners setup complete');
+        });
+
+        // Helper function to show notifications
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 10px;
+                color: white;
+                font-weight: 500;
+                z-index: 9999;
+                animation: slideIn 0.3s ease-out;
+                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+            `;
+            notification.innerHTML = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Add CSS for notification animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
