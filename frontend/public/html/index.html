@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureWeb - Platform Keamanan Website</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1><i class="fas fa-shield-alt"></i> Security Dashboard Platform</h1>
+                <p>Platform komprehensif untuk analisis keamanan website Anda</p>
+                <div class="cta-buttons">
+                    <button type="button" class="btn-hero btn-primary btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login ke Dashboard
+                    </button>
+                    <a href="register.html" class="btn-hero btn-secondary">
+                        <i class="fas fa-user-plus"></i> Daftar Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 50px; color: #2c3e50; font-size: 2.5rem;">Fitur Utama</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <h3>SSL Checker</h3>
+                    <p>Analisis mendalam sertifikat SSL website untuk memastikan keamanan koneksi.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Security Headers</h3>
+                    <p>Evaluasi header keamanan dan dapatkan rekomendasi untuk meningkatkan proteksi.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>File Manager</h3>
+                    <p>Upload, kelola, dan simpan file dengan sistem tracking yang aman.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 SecureWeb. Platform keamanan website terpercaya.</p>
+        </div>
+    </footer>
+
+    <!-- Login Popup -->
+    <div id="loginPopup" class="popup-overlay">
+        <div class="login-popup">
+            <button class="popup-close"><i class="fas fa-times"></i></button>
+            <div class="login-header">
+                <h1><i class="fas fa-shield-alt"></i> SecureWeb</h1>
+                <p>Masuk ke platform keamanan website</p>
+            </div>
+            <div class="demo-credentials">
+                <h4><i class="fas fa-info-circle"></i> Akun Demo untuk Testing:</h4>
+                <div class="demo-account">
+                    <span><strong>User Demo:</strong> user@example.com</span>
+                    <button class="use-demo-btn" data-type="user">Gunakan</button>
+                </div>
+                <div class="demo-account">
+                    <span><strong>Test User:</strong> test@example.com</span>
+                    <button class="use-demo-btn" data-type="test">Gunakan</button>
+                </div>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-with-icon">
+                        <input type="email" id="email" name="email" placeholder="Masukkan email Anda" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Masuk ke Dashboard
+                </button>
+                <div id="loginStatus" class="form-status"></div>
+            </form>
+            <div class="register-link">
+                <p>Belum punya akun? <a href="register.html">Daftar sekarang</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

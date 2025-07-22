@@ -1,0 +1,177 @@
+/* Dashboard Layout Styles */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f4f7f6;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 260px;
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width 0.3s ease;
+}
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #34495e;
+}
+.sidebar-header h3 {
+    margin: 0;
+    white-space: nowrap;
+}
+.sidebar-nav {
+    flex-grow: 1;
+    padding: 20px 0;
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #bdc3c7;
+    text-decoration: none;
+    gap: 15px;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+.nav-item:hover {
+    background: #34495e;
+    color: white;
+}
+.nav-item.active {
+    background: #667eea;
+    color: white;
+    font-weight: 600;
+}
+.nav-item i {
+    width: 20px;
+    text-align: center;
+}
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #34495e;
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.user-profile i {
+    font-size: 2rem;
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.user-info span:first-child {
+    font-weight: bold;
+}
+.user-info span:last-child {
+    font-size: 0.8rem;
+    color: #bdc3c7;
+}
+.logout-btn {
+    width: 100%;
+    background: #e74c3c;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s;
+}
+.logout-btn:hover {
+    background: #c0392b;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.main-header {
+    padding: 20px 30px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.main-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #2c3e50;
+}
+.content-area {
+    padding: 30px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+/* Dashboard Feature Card Styles */
+.feature-content-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+.feature-content-card h2 {
+    margin-top: 0;
+    color: #667eea;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.feature-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.feature-form input {
+    flex-grow: 1;
+    min-width: 250px;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.feature-form button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+.feature-form button:hover {
+    background-color: #5a67d8;
+}
+
+.results-area {
+    margin-top: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    background: #2c3e50;
+    color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-size: 0.9rem;
+}
